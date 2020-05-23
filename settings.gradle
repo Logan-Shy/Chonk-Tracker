@@ -1,0 +1,2 @@
+rootProject.name='Chonk Tracker'
+include ':app'
