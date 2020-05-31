@@ -3,4 +3,6 @@
     <string name="last_fed">Last Fed:</string>
     <string name="current_hunger">Hunger:</string>
     <string name="current_time">currentTimeText</string>
+    <string name="feed_button">CALM DEMON</string>
+    <string name="refresh_button">Refresh Time</string>
 </resources>
