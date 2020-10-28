@@ -29,9 +29,9 @@ class MainActivity : AppCompatActivity() {
     fun getTimeSinceFed(view: View) {
         // get content view and initialize networking
         setContentView(R.layout.activity_main)
-        AndroidNetworking.initialize(getApplicationContext())
-        var timeSinceFed = "Default Time Text"
-        var dayFed = "Default Day Text"
+        AndroidNetworking.initialize(applicationContext)
+        var timeSinceFed: String
+        var dayFed: String
 
         // Get Current time and day since fed from backend service
         AndroidNetworking.get("http://157.245.250.195/")
@@ -57,12 +57,12 @@ class MainActivity : AppCompatActivity() {
 
     fun updateTime(view: View){
         setContentView(R.layout.activity_main)
-        AndroidNetworking.initialize(getApplicationContext())
+        AndroidNetworking.initialize(applicationContext)
 
         // Use java util calendar method to get current hour and minute
         // Format differently depending on AM or PM and fill with 0's if less than 10
         val c = Calendar.getInstance()
-        var day : String
+        val day : String
         var minutes : String = c.get(Calendar.MINUTE).toString()
         if (minutes.toInt() < 10){
             minutes = "0$minutes"
@@ -75,16 +75,15 @@ class MainActivity : AppCompatActivity() {
             "A.M."
         }
 
-        when(c.get(Calendar.DAY_OF_WEEK)){
-            Calendar.SUNDAY -> day = "Sunday"
-            Calendar.MONDAY -> day = "Monday"
-            Calendar.TUESDAY -> day = "Tuesday"
-            Calendar.WEDNESDAY -> day = "Wednesday"
-            Calendar.THURSDAY -> day = "Thursday"
-            Calendar.FRIDAY -> day = "Friday"
-            Calendar.SATURDAY -> day = "Saturday"
-            Calendar.SUNDAY -> day = "Sunday"
-            else -> day ="day N/A"
+        day = when(c.get(Calendar.DAY_OF_WEEK)){
+            Calendar.SUNDAY -> "Sunday"
+            Calendar.MONDAY -> "Monday"
+            Calendar.TUESDAY -> "Tuesday"
+            Calendar.WEDNESDAY -> "Wednesday"
+            Calendar.THURSDAY -> "Thursday"
+            Calendar.FRIDAY -> "Friday"
+            Calendar.SATURDAY -> "Saturday"
+            else -> "day N/A"
         }
 
 
@@ -95,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         timeView.text = "$day, $time"
 
         // Update the backend with the time and day in JSON format
-        val timeJSON = JSONObject();
+        val timeJSON = JSONObject()
         timeJSON.put("time", time)
         timeJSON.put("day", day)
         AndroidNetworking.post("http://157.245.250.195/")
